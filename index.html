@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz Game</title>
+    <style>
+        body {
+            background-color: lightblue;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .options {
+            margin-bottom: 20px;
+        }
+
+        .option {
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background-color: lightgreen;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Interactive Quiz Game</h1>
+        <div id="quiz" class="question"></div>
+        <div class="options" id="options"></div>
+        <button class="btn" id="nextBtn">Next</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What is the capital of France?",
+                options: ["London", "Paris", "Berlin", "Madrid"],
+                answer: "Paris"
+            },
+            {
+                question: "What is the capital of Japan?",
+                options: ["Beijing", "Seoul", "Tokyo", "Bangkok"],
+                answer: "Tokyo"
+            },
+            {
+                question: "What is the capital of Australia?",
+                options: ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+                answer: "Canberra"
+            },
+            {
+                question: "What is the capital of Brazil?",
+                options: ["Sao Paulo", "Rio de Janeiro", "Brasilia", "Salvador"],
+                answer: "Brasilia"
+            },
+            {
+                question: "What is the capital of South Africa?",
+                options: ["Johannesburg", "Cape Town", "Durban", "Pretoria"],
+                answer: "Pretoria"
+            }
+        ];
+
+        const quizContainer = document.getElementById("quiz");
+        const optionsContainer = document.getElementById("options");
+        const nextButton = document.getElementById("nextBtn");
+        let currentQuestion = 0;
+
+        function startQuiz() {
+            showQuestion(quizData[currentQuestion]);
+        }
+
+        function showQuestion(question) {
+            quizContainer.innerText = question.question;
+            optionsContainer.innerHTML = "";
+            question.options.forEach(option => {
+                const button = document.createElement("button");
+                button.innerText = option;
+                button.classList.add("option");
+                button.addEventListener("click", selectAnswer);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function selectAnswer(event) {
+            const selectedOption = event.target.innerText;
+            const correctAnswer = quizData[currentQuestion].answer;
+            if (selectedOption === correctAnswer) {
+                // Handle correct answer
+            } else {
+                // Handle wrong answer
+            }
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                showQuestion(quizData[currentQuestion]);
+            } else {
+                // Quiz ends, display completion message
+                quizContainer.innerText = "Quiz Completed!";
+                optionsContainer.innerHTML = "";
+                nextButton.style.display = "none";
+                // Display a message to the user
+                const resultContainer = document.getElementById("result");
+                resultContainer.innerText = "Congratulations! You have completed the quiz.";
+            }
+        }
+
+        nextButton.addEventListener("click", startQuiz);
+
+        startQuiz();
+    </script>
+</body>
+
+</html>
